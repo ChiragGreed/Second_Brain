@@ -1,8 +1,10 @@
 import express from 'express';
+import { saveItem } from '../controllers/ItemControllers.js';
 
-const ItemRouter = require('express').Router();
+const ItemRouter = express.Router();
 
-ItemRouter.post('/save',);
+ItemRouter.post('/save', saveItem);
 
 
+export default ItemRouter;
 

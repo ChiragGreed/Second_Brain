@@ -1,0 +1,22 @@
+{
+ "manifest_version": 3,
+
+ "name": "Save to Memory",
+
+ "version": "1.0",
+
+ "description": "Save anything to AI memory",
+
+ "permissions": [
+  "activeTab",
+  "scripting"
+ ],
+
+ "action": {
+  "default_popup": "popup.html"
+ },
+
+ "host_permissions": [
+  "http://localhost:9000/*"
+ ]
+}
