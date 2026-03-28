@@ -4,14 +4,14 @@ const collectionSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true
     },
-    description: {
-        type: String,
-        required: true
+
+    itemCount: {
+        type: Number,
+        default: 0
     }
 
-})
+}, { timestamps: true });
 
-const collectionModel = mongoose.model("collection", collectionSchema);
-
-export default collectionModel;
+export default mongoose.models.collection || mongoose.model("collection", collectionSchema);

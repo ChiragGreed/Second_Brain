@@ -1,46 +1,111 @@
 document.getElementById("saveBtn").onclick = async () => {
 
-    const [tab] = await chrome.tabs.query({
-        active: true,
-        currentWindow: true
-    })
+    const existingCollection =
+        document
+        .getElementById("existingCollection")
+        .value
+        .trim()
 
-    const result = await chrome.scripting.executeScript({
+    const newCollection =
+        document
+        .getElementById("newCollection")
+        .value
+        .trim()
 
-        target: { tabId: tab.id },
+    const message =
+        document.getElementById("message")
 
-        func: () => {
+    message.innerText = ""
 
-            const selectedText = window.getSelection().toString()
 
-            return {
+    if (existingCollection && newCollection) {
 
-                title: document.title,
+        message.innerText =
+            "Use only one field"
 
-                content: selectedText || document.title,
+        return
 
-                url: window.location.href
+    }
+
+
+    const [tab] =
+        await chrome.tabs.query({
+
+            active: true,
+            currentWindow: true
+
+        })
+
+
+    const result =
+        await chrome.scripting.executeScript({
+
+            target: { tabId: tab.id },
+
+            func: () => {
+
+                const selectedText =
+                    window.getSelection().toString()
+
+                return {
+
+                    title: document.title,
+
+                    content:
+                        selectedText ||
+                        document.body.innerText.slice(0,2000),
+
+                    url: window.location.href
+
+                }
 
             }
 
-        }
+        })
 
-    })
 
-    const data = result[0].result
+    const data =
+        result[0].result
 
-    await fetch("http://localhost:9000/api/items/save", {
 
-        method: "POST",
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+    const res =
+        await fetch(
 
-        body: JSON.stringify(data)
+            "http://localhost:9000/api/items/save",
 
-    })
+            {
 
-    alert("Saved")
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    ...data,
+
+                    existingCollection,
+
+                    newCollection
+
+                })
+
+            }
+
+        )
+
+
+    const resultMsg =
+        await res.json()
+
+
+    message.innerText =
+        resultMsg.message
+        || resultMsg.error
 
 }

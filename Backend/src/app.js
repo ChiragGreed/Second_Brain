@@ -1,5 +1,6 @@
 import express from 'express';
 import ItemRouter from './routes/ItemRoutes.js';
+import CollectionRouter from './routes/CollectionRoutes.js';
 import cors from 'cors';
 
 const app = express();
@@ -10,5 +11,6 @@ app.use(cors({
 }));
 
 app.use('/api/items', ItemRouter);
+app.use('/api/collections', CollectionRouter);
 
 export default app;

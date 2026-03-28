@@ -10,7 +10,9 @@ export const getItemsApi = async () => {
     return response.data;
 }
 
-export const searchItemsApi = async(Query)=>{
+export const searchItemsApi = async (Query) => {
     const response = await api.get(`/searchItems?query=${Query}`);
     return response.data;
 }
+
+

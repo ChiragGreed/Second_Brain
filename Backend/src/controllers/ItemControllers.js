@@ -3,45 +3,65 @@ import { createEmbedding } from "../services/embeddingService.js"
 import { generateTags } from "../services/tagsService.js";
 import { RelatedItemService } from "../services/relatedItemsService.js"
 import { semanticSearch } from "../services/semanticSearchService.js"
+import { createCollectionIfNotExists, findCollectionByName } from "../services/collectionService.js";
+import collectionModel from "../Models/collectionModel.js";
 
 
 export const saveItem = async (req, res) => {
+    try {
+        const { content, url, title, existingCollection, newCollection } = req.body;
 
-    const { content, url, title, collectionId } = req.body;
+        if (existingCollection && newCollection)
+            return res.status(400).json({
+                success: false,
+                error: "Use either existingCollection OR newCollection"
+            });
 
-    const tags = await generateTags(content);
+        let collectionId = null;
 
-    const embedding = await createEmbedding(content);
+        if (newCollection) {
+            const col = await createCollectionIfNotExists(newCollection.trim());
 
-    const item = await itemModel.create({
-        title,
-        content,
-        url,
-        embedding,
-        tags,
-        collectionId
-    })
+            collectionId = col._id;
+        }
 
-    res.status(200).json({
-        message: "Item saved successfully",
-        success: true,
-        item
-    })
+        if (existingCollection) {
+            const col = await findCollectionByName(existingCollection.trim());
 
-}
+            if (!col) return res.status(400).json({ success: false, error: "Collection does not exist" });
 
-export const getItems = async (req,res)=>{
+            collectionId = col._id;
+        }
+
+        const tags = await generateTags(content);
+        const embedding = await createEmbedding(content);
+
+        const item = await itemModel.create({ title, content, url, tags, embedding, collectionId });
+
+        if (collectionId) await collectionModel.findByIdAndUpdate(collectionId, { $inc: { itemCount: 1 } });
+
+        res.status(200).json({ success: true, message: "Item saved", item });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
+    }
+};
+
+export const getItems = async (req, res) => {
     const items = await itemModel.find();
 
-    if(!items) return res.status(404).json({
-        message:"No items found",
-        success:false,
-        error:"No items found in database"
+    if (!items) return res.status(404).json({
+        message: "No items found",
+        success: false,
+        error: "No items found in database"
     })
 
     res.status(200).json({
-        message:"Items fetched for user",
-        success:true,
+        message: "Items fetched for user",
+        success: true,
         items
     })
 }
@@ -65,41 +85,42 @@ export const getRelatedItems = async (req, res) => {
 
 }
 
-
 export const semanticSearchItems = async (req, res) => {
 
- try{
+    try {
 
-  const { query } = req.query
+        const { query } = req.query
 
-  if(!query){
+        if (!query) {
 
-   return res.status(400).json({
-    error: "Query is required"
-   })
+            return res.status(400).json({
+                error: "Query is required"
+            })
 
-  }
+        }
 
-  const results = await semanticSearch(query)
+        const results = await semanticSearch(query)
 
-  res.json({
+        res.json({
 
-   total: results.length,
+            total: results.length,
 
-   items: results
+            items: results
 
-  })
+        })
 
- }
- catch(err){
+    }
+    catch (err) {
 
-  console.error(err)
+        console.error(err)
 
-  res.status(500).json({
-   error: err.message
-  })
+        res.status(500).json({
+            error: err.message
+        })
 
- }
+    }
 
 }
+
+
 

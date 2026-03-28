@@ -3,8 +3,8 @@ import useItems from '../../Hooks/useItems';
 import './ItemCard.scss';
 
 const ItemCard = () => {
-  const { context, getItemsHandler } = useItems();
-  const { Items } = context;
+  const { context_items, getItemsHandler } = useItems();
+  const { Items } = context_items;
 
   useEffect(() => {
     getItemsHandler();

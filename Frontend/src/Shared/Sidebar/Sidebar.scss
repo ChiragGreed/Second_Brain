@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+
+$ink: #0e0e0e;
+$ink2: #6b6b6b;
+$ink3: #a8a8a8;
+$surf: #ffffff;
+$surf2: #f7f7f5;
+$surf3: #f0efe9;
+$bdr: rgba(0, 0, 0, 0.08);
+$bdr2: rgba(0, 0, 0, 0.13);
+$accent: #0e0e0e;
+
+.sidebar {
+    width: 220px;
+    height: 93vh;
+    position: absolute;
+    top:7%;
+    left:0%;
+    background: $surf;
+    border-right: 1px solid $bdr2;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    font-family: 'DM Sans', sans-serif;
+}
+
+// ── Logo / brand ──────────────────────────────────────────────────────────
+.sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 16px 18px;
+    border-bottom: 1px solid $bdr;
+}
+
+.sidebar__logo-mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: $ink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+        width: 14px;
+        height: 14px;
+        stroke: #fff;
+        stroke-width: 1.6;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+
+.sidebar__brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.sidebar__brand-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: $ink;
+    letter-spacing: -0.01em;
+}
+
+.sidebar__brand-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: $ink3;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+// ── Scrollable body ───────────────────────────────────────────────────────
+.sidebar__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 10px;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $bdr2;
+        border-radius: 2px;
+    }
+}
+
+// ── Section label ─────────────────────────────────────────────────────────
+.sidebar__section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: $ink3;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 12px 10px 5px;
+}
+
+// ── Divider ───────────────────────────────────────────────────────────────
+.sidebar__divider {
+    height: 1px;
+    background: $bdr;
+    margin: 6px 10px;
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────
+.sidebar__footer {
+    padding: 12px 10px;
+    border-top: 1px solid $bdr;
+}
+
+// ── Nav item ──────────────────────────────────────────────────────────────
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+    color: $ink2;
+    font-size: 12.5px;
+    font-weight: 400;
+    position: relative;
+    transition: background 0.12s, color 0.12s;
+    user-select: none;
+
+    &:hover {
+        background: $surf2;
+        color: $ink;
+    }
+
+    &--active {
+        background: $surf3;
+        color: $ink;
+        font-weight: 500;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 22%;
+            bottom: 22%;
+            width: 2.5px;
+            border-radius: 0 2px 2px 0;
+            background: $accent;
+        }
+    }
+
+    // ── Icon
+    &__icon {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    }
+
+    // ── Label
+    &__label {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    // ── Badge
+    &__badge {
+        font-family: 'DM Mono', monospace;
+        font-size: 10px;
+        padding: 1px 7px;
+        border-radius: 99px;
+        background: $surf3;
+        color: $ink3;
+        border: 1px solid $bdr;
+        flex-shrink: 0;
+
+        &--new {
+            background: #e8f4e8;
+            color: #2e7d32;
+            border-color: transparent;
+        }
+
+        &--alert {
+            background: #fdecea;
+            color: #c62828;
+            border-color: transparent;
+        }
+    }
+}

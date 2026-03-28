@@ -4,8 +4,8 @@ import "./SearchBar.scss"
 
 const SearchBar = () => {
 
-    const { context, searchItemsHandler } = useItems();
-    const { Items } = context;
+    const { context_items, searchItemsHandler } = useItems();
+    const { Items } = context_items;
 
 
     const [Query, setQuery] = useState("")
@@ -15,10 +15,6 @@ const SearchBar = () => {
         e.preventDefault();
         searchItemsHandler(Query);
     }
-
-    useEffect(() => {
-        console.log(Items);
-    }, [])
 
     const handleSearch = (e) => {
         const value = e.target.value
