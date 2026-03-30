@@ -7,8 +7,7 @@ const SearchBar = () => {
     const { context_items, searchItemsHandler } = useItems();
     const { Items } = context_items;
 
-
-    const [Query, setQuery] = useState("")
+    const [Query, setQuery] = useState("");
 
 
     const submitHandler = (e) => {

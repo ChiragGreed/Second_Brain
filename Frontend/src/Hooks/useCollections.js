@@ -1,12 +1,16 @@
 import { useContext } from "react";
-import { getCollectionsApi } from "../services/collectionsApi"
+import { getCollectionItemsApi, getCollectionsApi } from "../services/collectionsApi"
 import { collectionsContext } from "../state/collectionsContext";
+import { itemsContext } from "../state/itemsContext";
 
 
 const useCollections = () => {
 
     const context_collections = useContext(collectionsContext);
+    const context_items = useContext(itemsContext);
+    
     const { setCollections, setLoading } = context_collections;
+    const { setItems, Items } = context_items;
 
 
     const getCollectionsHandler = async () => {
@@ -26,7 +30,26 @@ const useCollections = () => {
 
     }
 
-    return ({ context_collections, getCollectionsHandler })
+    const getCollectionItemsHandler = async (collectionId) => {
+
+        try {
+            setLoading(true);
+
+            const response = await getCollectionItemsApi(collectionId);
+            setItems(response.items);
+            console.log(Items);
+        }
+        catch (err) {
+            console.log(err);
+        }
+        finally {
+            setLoading(false)
+        }
+
+
+    };
+
+    return ({ context_collections, getCollectionsHandler, getCollectionItemsHandler })
 }
 
 export default useCollections

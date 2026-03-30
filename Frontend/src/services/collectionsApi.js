@@ -10,3 +10,8 @@ export const getCollectionsApi = async () => {
     return response.data;
 }
 
+export const getCollectionItemsApi = async (collectionId) => {
+    const response = await api.get(`/${collectionId}/items`);
+    return response.data;
+
+}

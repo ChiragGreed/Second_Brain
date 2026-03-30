@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import '../Styles/Pages.scss';
 
 import useCollections from '../../Hooks/useCollections';
 import useItems from '../../Hooks/useItems';
+
 
 const iconDefault = (
     <svg viewBox="0 0 24 24">
@@ -12,14 +15,16 @@ const iconDefault = (
 
 const Collections = () => {
 
-    const { context_collections, getCollectionsHandler } = useCollections();
-    const { context_items, getItemsHandler } = useItems();
+    const navigate = useNavigate();
+
+    const { context_collections, getCollectionsHandler, getCollectionItemsHandler } = useCollections();
+    const { context_items } = useItems();
+
     const { Collections } = context_collections;
     const { Items } = context_items;
 
     useEffect(() => {
         getCollectionsHandler();
-        getItemsHandler();
     }, []);
 
 
@@ -86,6 +91,10 @@ const Collections = () => {
                         <div
                             className="collection-card"
                             key={col._id}
+                            onClick={() => {
+                                getCollectionItemsHandler(col._id);
+                                navigate(`/collections/${col._id}`);
+                            }}
                         >
 
                             <div className="collection-card__icon">

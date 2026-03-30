@@ -1,5 +1,4 @@
-import React from 'react';
-import NavItem from '../../Pages/NavitemPage/NavItem';
+import { Outlet, useNavigate } from 'react-router-dom';
 import './Sidebar.scss';
 
 // ── SVG icons ──────────────────────────────────────────────────────────────
@@ -31,13 +30,7 @@ const icons = {
 };
 
 // ── Nav config ─────────────────────────────────────────────────────────────
-const MAIN_NAV = [
-    { id: 'dashboard', label: 'Dashboard', icon: icons.dashboard },
-    { id: 'graph', label: 'Knowledge graph', icon: icons.graph, badge: 'new', badgeVariant: 'new' },
-    { id: 'collections', label: 'Collections', icon: icons.collections, badge: 4 },
-    { id: 'resurfacing', label: 'Resurfacing', icon: icons.resurfacing, badge: 2, badgeVariant: 'alert' },
-    { id: 'search', label: 'Search', icon: icons.search },
-];
+
 
 const FOOTER_NAV = [
     { id: 'settings', label: 'Settings', icon: icons.settings },
@@ -46,6 +39,9 @@ const FOOTER_NAV = [
 
 // ── Component ──────────────────────────────────────────────────────────────
 const Sidebar = ({ activeScreen, onNavigate }) => {
+
+    const navigate = useNavigate();
+
     return (
         <aside className="sidebar">
             {/* Brand */}
@@ -62,32 +58,20 @@ const Sidebar = ({ activeScreen, onNavigate }) => {
             {/* Body */}
             <div className="sidebar__body">
                 <div className="sidebar__section-label">Explore</div>
+                <div className='explore_section'>
+                    <p onClick={() => navigate('/inbox')}>Inbox</p>
+                    <p onClick={() => navigate('/collections')}>Collections</p>
+                    <p onClick={() => navigate('/knowledgeGraph')}>Knowledge Graph</p>
+                    <p onClick={() => navigate('/resurfacing')}>Resurfacing</p>
+                </div>
 
-                {MAIN_NAV.map((item) => (
-                    <NavItem
-                        key={item.id}
-                        icon={item.icon}
-                        label={item.label}
-                        badge={item.badge}
-                        badgeVariant={item.badgeVariant}
-                        active={activeScreen === item.id}
-                        onClick={() => onNavigate(item.id)}
-                    />
-                ))}
             </div>
 
             {/* Footer */}
             <div className="sidebar__footer">
-                {FOOTER_NAV.map((item) => (
-                    <NavItem
-                        key={item.id}
-                        icon={item.icon}
-                        label={item.label}
-                        active={activeScreen === item.id}
-                        onClick={() => onNavigate(item.id)}
-                    />
-                ))}
+
             </div>
+
         </aside>
     );
 };

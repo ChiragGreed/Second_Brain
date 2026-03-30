@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { getItemsApi, searchItemsApi } from "../services/itemsApi"
 import { itemsContext } from "../state/itemsContext";
+import { getCollectionItemsApi } from "../services/collectionsApi";
 
 
 const useItems = () => {
@@ -15,6 +16,7 @@ const useItems = () => {
 
             const response = await getItemsApi();
             setItems(response.items);
+            setLoading(false);
 
         }
         catch (err) {
@@ -43,11 +45,11 @@ const useItems = () => {
 
     }
 
-    const getCollectionsHandler = async () => {
+    const getCollectionsHandler = async (collectionId) => {
 
         try {
             setLoading(true);
-            const response = await getCollectionsApi();
+            const response = await getCollectionItemsApi(collectionId);
             setCollections(response.collections);
 
         }

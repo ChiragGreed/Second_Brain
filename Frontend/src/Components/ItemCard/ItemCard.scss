@@ -11,8 +11,9 @@ $card-bg: #ffffff33;
 $tag-bg: #8d8c8a;
 $link-bg: #8d8c8a;
 
-// ── Card Grid 
-.items-grid {
+
+
+.items_grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 2rem;

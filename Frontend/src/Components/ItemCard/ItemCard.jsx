@@ -1,54 +1,82 @@
-import React, { useEffect } from 'react';
-import useItems from '../../Hooks/useItems';
 import './ItemCard.scss';
 
-const ItemCard = () => {
-  const { context_items, getItemsHandler } = useItems();
-  const { Items } = context_items;
-
-  useEffect(() => {
-    getItemsHandler();
-  }, []);
-
-
+function ItemCardRender({ items }) {
   return (
-    <div className="items-grid">
-      {Items.map((item) => (
-        <article className="item-card" key={item.id ?? item.title}>
-          <div className="item-card__body">
-            <h2 className="item-card__title">{item.title}</h2>
+    items.map((item, idx) => {
+      return <article key={idx} className="item-card">
 
-            {item.summary && (
-              <p className="item-card__summary">{item.summary}</p>
-            )}
+        <div className="item-card__body">
 
-            {item.tags?.length > 0 && (
-              <div className="item-card__tags">
-                {item.tags.map((tag) => (
-                  <span className="item-card__tag" key={tag}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+          <h2 className="item-card__title">
+            {item.title}
+          </h2>
+
+          {item.summary && (
+
+            <p className="item-card__summary">
+              {item.summary}
+            </p>
+
+          )}
+
+          {item.tags?.length > 0 && (
+
+            <div className="item-card__tags">
+
+              {item.tags.map(tag => (
+
+                <span
+                  key={tag}
+                  className="item-card__tag"
+                >
+
+                  {tag}
+
+                </span>
+
+              ))}
+
+            </div>
+
+          )}
+
+        </div>
+
+
+        {item.url && (
+
+          <div className="item-card__footer">
+
+            <a
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="item-card__link"
+            >
+
+              open source
+
+            </a>
+
           </div>
 
-          {item.url && (
-            <div className="item-card__footer">
-              <a
-                className="item-card__link"
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.url}
-              </a>
-            </div>
-          )}
-        </article>
-      ))}
+        )}
+
+      </article>
+
+
+    })
+  )
+}
+
+const ItemCard = ({ items }) => {
+  return (
+    <div className='items_grid'>
+      <ItemCardRender items={items} />
     </div>
-  );
+  )
+
 };
+
 
 export default ItemCard;
