@@ -5,7 +5,7 @@ export const vectorSearch = async ({
  embedding,
  excludeId = null,
  limit = 10,
- threshold = 0.55
+ threshold = 0.20
 }) => {
 
  if(!embedding){

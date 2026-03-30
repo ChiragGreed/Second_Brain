@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { getCollectionItemsApi, getCollectionsApi } from "../services/collectionsApi"
-import { collectionsContext } from "../state/collectionsContext";
-import { itemsContext } from "../state/itemsContext";
+import { getCollectionItemsApi, getCollectionsApi } from "../services/Api/collectionsApi"
+import { collectionsContext } from "../State/CollectionsContext";
+import { itemsContext } from "../State/ItemsContext";
 
 
 const useCollections = () => {

@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react"
 import useItems from "../../Hooks/useItems"
 import "./SearchBar.scss"
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
 
     const { context_items, searchItemsHandler } = useItems();
     const { Items } = context_items;
 
+    const navigate = useNavigate();
+
     const [Query, setQuery] = useState("");
 
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        searchItemsHandler(Query);
+        await searchItemsHandler(Query);
+        navigate('/searchResult')
     }
 
     const handleSearch = (e) => {

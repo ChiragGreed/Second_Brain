@@ -41,6 +41,7 @@ const FOOTER_NAV = [
 const Sidebar = ({ activeScreen, onNavigate }) => {
 
     const navigate = useNavigate();
+    
 
     return (
         <aside className="sidebar">

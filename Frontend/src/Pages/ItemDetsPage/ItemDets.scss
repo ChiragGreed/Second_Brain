@@ -1,0 +1,15 @@
+.ItemsDetsPage {
+
+    display: flex;
+    flex-direction: column;
+
+    .item{
+        margin-bottom:5rem;
+    }
+
+    .related_items_label {
+        color: white;
+        font-size: 2rem;
+        text-decoration: underline;
+    }
+}

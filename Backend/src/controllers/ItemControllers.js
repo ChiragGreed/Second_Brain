@@ -7,6 +7,7 @@ import { createCollectionIfNotExists, findCollectionByName } from "../services/c
 import collectionModel from "../Models/collectionModel.js";
 
 
+
 export const saveItem = async (req, res) => {
     try {
         const { content, url, title, existingCollection, newCollection } = req.body;
@@ -51,7 +52,7 @@ export const saveItem = async (req, res) => {
 };
 
 export const getItems = async (req, res) => {
-    const items = await itemModel.find();
+    const items = await itemModel.find().sort({ createdAt: -1 });
 
     if (!items) return res.status(404).json({
         message: "No items found",
@@ -66,9 +67,49 @@ export const getItems = async (req, res) => {
     })
 }
 
+export const getSingleItem = async (req, res) => {
+
+    try {
+        const { itemId } = req.params;
+
+        if (!itemId) return res.status(400).json({
+            message: "Item id missing in params",
+            success: false,
+            err: "Missing itemId"
+        })
+        console.log(itemId);
+
+        const item = await itemModel.findOne({ _id: itemId });
+
+        if (!item) return res.status(404).json({
+            message: "No item found",
+            success: false,
+            error: "No item found with given Item Id"
+        })
+
+        res.status(200).json({
+            message: "Item fetched for user",
+            success: true,
+            item
+        })
+    }
+    catch (err) {
+        res.status(500).json({
+            error: err.message
+        })
+    }
+
+}
+
 export const getRelatedItems = async (req, res) => {
     try {
         const { itemId } = req.params
+
+        if (!itemId) return res.status(400).json({
+            message: "Item id missing in params",
+            success: false,
+            err: "Missing itemId"
+        })
 
         const related = await RelatedItemService(itemId)
 
@@ -112,10 +153,11 @@ export const semanticSearchItems = async (req, res) => {
     }
     catch (err) {
 
-        console.error(err)
+        console.error(err,"HELO");
 
         res.status(500).json({
-            error: err.message
+            // error: err.message
+            message:"HEHE"
         })
 
     }

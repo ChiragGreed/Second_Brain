@@ -10,6 +10,16 @@ export const getItemsApi = async () => {
     return response.data;
 }
 
+export const getSingleItemApi = async (itemId) => {
+    const response = await api.get(`/${itemId}`);
+    return response.data;
+}
+
+export const getRelatedItemApi = async (itemId) => {
+    const response = await api.get(`/getRelatedItems/${itemId}`);
+    return response.data;
+}
+
 export const searchItemsApi = async (Query) => {
     const response = await api.get(`/searchItems?query=${Query}`);
     return response.data;

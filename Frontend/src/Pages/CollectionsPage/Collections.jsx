@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-
-import '../Styles/Pages.scss';
+import './Collections.scss';
 
 import useCollections from '../../Hooks/useCollections';
 import useItems from '../../Hooks/useItems';
@@ -18,13 +17,14 @@ const Collections = () => {
     const navigate = useNavigate();
 
     const { context_collections, getCollectionsHandler, getCollectionItemsHandler } = useCollections();
-    const { context_items } = useItems();
+    const { context_items, getItemsHandler } = useItems();
 
     const { Collections } = context_collections;
     const { Items } = context_items;
 
     useEffect(() => {
         getCollectionsHandler();
+        getItemsHandler();
     }, []);
 
 

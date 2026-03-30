@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { getItemsApi, searchItemsApi } from "../services/itemsApi"
-import { itemsContext } from "../state/itemsContext";
-import { getCollectionItemsApi } from "../services/collectionsApi";
+import { getItemsApi, getRelatedItemApi, getSingleItemApi, searchItemsApi } from "../services/Api/itemsApi"
+import { itemsContext } from "../State/ItemsContext";
+import { getCollectionItemsApi } from "../services/Api/collectionsApi";
 
 
 const useItems = () => {
 
     const context_items = useContext(itemsContext);
-    const { setItems, Collections, setCollections, setLoading } = context_items;
+    const { setItems, Items, setSingleItem, setCollections, setLoading } = context_items;
 
     const getItemsHandler = async () => {
 
@@ -16,6 +16,44 @@ const useItems = () => {
 
             const response = await getItemsApi();
             setItems(response.items);
+            setLoading(false);
+
+        }
+        catch (err) {
+            return err;
+        }
+        finally {
+            setLoading(false)
+        }
+
+    }
+
+    const getSingleItemHandler = async (itemId) => {
+
+        try {
+            setLoading(true);
+
+            const response = await getSingleItemApi(itemId);
+            setSingleItem(response.item);
+            setLoading(false);
+
+        }
+        catch (err) {
+            return err;
+        }
+        finally {
+            setLoading(false)
+        }
+
+    }
+
+    const getRelatedItemHandler = async (itemId) => {
+
+        try {
+            setLoading(true);
+
+            const response = await getRelatedItemApi(itemId);
+            setItems(response.related);
             setLoading(false);
 
         }
@@ -62,7 +100,7 @@ const useItems = () => {
 
     }
 
-    return ({ context_items, getItemsHandler, searchItemsHandler, getCollectionsHandler })
+    return ({ context_items, getItemsHandler, getSingleItemHandler, getRelatedItemHandler, searchItemsHandler, getCollectionsHandler })
 }
 
 export default useItems

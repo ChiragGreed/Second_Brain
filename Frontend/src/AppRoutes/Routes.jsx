@@ -6,6 +6,9 @@ import KnowledgeGraph from '../Pages/KnowledgeGraphPage/KnowlegeGraph'
 import Resurfacing from '../Pages/ResurfacingPage/Resurfacing'
 import Dashboard from '../Pages/DashboardPage/Dashboard'
 import CollectionDets from '../Pages/CollectionsPage/CollectionDetsPage/CollectionDets'
+import ItemDets from '../Pages/ItemDetsPage/ItemDets'
+import SearchResult from '../Pages/SearchResultPage/SearchResult'
+
 
 const AppRouter = () => {
     return (
@@ -15,6 +18,10 @@ const AppRouter = () => {
                 <Route path="/" element={<App />}>
 
                     <Route index path='/Inbox' element={<Dashboard />} />
+
+                    <Route index path='/searchResult' element={<SearchResult />} />
+
+                    <Route path='/items/:itemId' element={<ItemDets />} />
 
                     <Route element={<Collections />} />
 

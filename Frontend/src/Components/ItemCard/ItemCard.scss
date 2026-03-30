@@ -112,6 +112,26 @@ $link-bg: #8d8c8a;
         }
     }
 
+    &__date{
+        background-color: #ec5c34;
+        padding-inline: 0.6rem;
+        padding-block:0.3rem;
+        border-radius: 4rem;
+        display: flex;
+        width: fit-content;
+        align-items: center;
+        gap:1rem;
+        
+        h4{
+            color:black;
+            font-weight: 800;
+        }
+
+        p{
+            color:white;
+        }
+    }
+
     // ── URL Footer
     &__footer {
         border-top: 1px solid $border;

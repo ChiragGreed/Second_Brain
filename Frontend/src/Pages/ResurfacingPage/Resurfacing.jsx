@@ -1,5 +1,6 @@
 import React from 'react';
-import '../Styles/Pages.scss'
+import './Resurfacing.scss'
+
 const ITEMS = [
     {
         title: 'Attention mechanisms in transformers',
