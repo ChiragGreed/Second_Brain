@@ -19,15 +19,8 @@ const validateUser = async (req, res, next) => {
         err: "Invalid token"
     })
 
-    const user = await userModel.findById(decodedToken.userid);
+    req.user = { userid: decodedToken.userid }
 
-    if (!user) return res.status(400).json({
-        message: "Invalid token",
-        success: false,
-        err: "Invaild token"
-    })
-    req.user = user;
-    
     next();
 }
 

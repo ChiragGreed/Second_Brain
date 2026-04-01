@@ -1,20 +1,23 @@
 import Item from "../models/itemModel.js"
 import { vectorSearch } from "../utils/vector.util.js"
 
-export const RelatedItemService = async (itemId) => {
+export const RelatedItemService = async (userid, itemId) => {
 
- const item = await Item.findById(itemId)
 
- return vectorSearch({
+    const item = await Item.findOne({ _id: itemId })
 
-  embedding: item.embedding,
 
-  excludeId: itemId,
 
-  limit: 5,
+    return vectorSearch({
+        userid: userid,
+        embedding: item.embedding,
 
-  threshold: 0.65
+        excludeId: itemId,
 
- })
+        limit: 5,
+
+        threshold: 0.65
+
+    })
 
 }

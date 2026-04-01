@@ -1,50 +1,38 @@
 import collectionModel from "../Models/collectionModel.js";
-import itemModel from "../models/ItemModel.js";
+import itemModel from "../models/itemModel.js";
+
 
 export const getCollections = async (req, res) => {
-    try {
-        const collections = await collectionModel.find();
 
-        if (!collections) return res.status(200).json({
-            message: "No collection made yet!",
-            success: true,
-        })
+    const { userid } = req.user;
+    const collections = await collectionModel.find({ userId: userid });
 
-        res.status(200).json({
-            message: "Fetched Item Collections",
-            success: true,
-            collections
-        });
+    if (!collections) return res.status(200).json({
+        message: "No collection made yet!",
+        success: true,
+    })
 
-    } catch (error) {
-        res.status(400).json({
-            message: "Failed to fetch Collections",
-            success: false,
-            err: error
-        });
-    }
+    res.status(200).json({
+        message: "Fetched Item Collections",
+        success: true,
+        collections
+    });
 };
 
 export const getCollectionItems = async (req, res) => {
-    try {
 
-        const { collectionId } = req.params;
+    const { userid } = req.user;
 
-        const items = await itemModel.find({ collectionId });
+    const { collectionId } = req.params;
 
-        res.status(200).json({
-            message:"Fetched Items from collection",
-            success: true,
-            total: items.length,
-            items
-        });
+    const items = await itemModel.find({ userId: userid, collectionId });
 
-    } catch (err) {
+    res.status(200).json({
+        message: "Fetched Items from collection",
+        success: true,
+        total: items.length,
+        items
+    });
 
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
 
-    }
 };

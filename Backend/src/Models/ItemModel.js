@@ -16,6 +16,7 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+
     summary: {
         type: String,
         default: function () {
@@ -54,8 +55,12 @@ const itemSchema = new mongoose.Schema({
 
     collectionId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "collection",
+        ref: "Collections",
     },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Users"
+    }
 
 },
     { timestamps: true }

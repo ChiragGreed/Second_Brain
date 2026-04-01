@@ -5,23 +5,23 @@ const SIMILARITY_THRESHOLD = 0.47;
 
 
 export const buildKnowledgeGraph =
-    async () => {
+    async (userid) => {
 
-        const items = await Item.find({embedding: { $exists: true }})
-                .select("_id title tags embedding collectionId");
+        const items = await Item.find({ userId: userid, embedding: { $exists: true } })
+            .select("_id title tags embedding collectionId");
 
         const nodes = items.map(item => ({
 
-                id: item._id,
+            id: item._id,
 
-                label: item.title,
+            label: item.title,
 
-                tags: item.tags,
+            tags: item.tags,
 
-                collectionId:
-                    item.collectionId
+            collectionId:
+                item.collectionId
 
-            }));
+        }));
 
         const edges = [];
 

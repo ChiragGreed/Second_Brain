@@ -1,9 +1,9 @@
 
 import Item from "../models/itemModel.js"
 
-export const getResurfacedItems = async () => {
+export const getResurfacedItems = async (userid) => {
 
-    const items = await Item.find()
+    const items = await Item.find({ userId: userid })
 
     if (items.length === 0) return []
 
