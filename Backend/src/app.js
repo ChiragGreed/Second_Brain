@@ -27,10 +27,11 @@ app.use(cors({
 
 app.use(cookieParser());
 
-app.use('/', IntegrationRouter);
 app.use('/api/auth', authRoutes);
 app.use('/api/items', ItemRouter);
 app.use('/api/collections', CollectionRouter);
 app.use('/api/knowledgeGraph', GraphRouter);
+
+app.use('/', IntegrationRouter);
 
 export default app;
