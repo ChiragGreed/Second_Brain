@@ -1,5 +1,5 @@
 import collectionModel from "../Models/collectionModel.js";
-import itemModel from "../models/itemModel.js";
+import itemModel from "../Models/itemModel.js";
 import { createCollectionService } from "../services/collectionService.js";
 
 

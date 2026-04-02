@@ -1,4 +1,4 @@
-import Item from "../models/itemModel.js"
+import Item from "../Models/itemModel.js"
 import { cosineSimilarity } from "./similarityService.js"
 
 const SIMILARITY_THRESHOLD = 0.47;

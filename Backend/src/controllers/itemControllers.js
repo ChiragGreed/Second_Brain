@@ -7,8 +7,8 @@ import { getLinkPreview } from "../utils/preview.util.js";
 
 
 // Models import
-import itemModel from "../models/itemModel.js";
-import userModel from "../Models/UserModel.js";
+import itemModel from "../Models/itemModel.js";
+import userModel from "../Models/userModel.js";
 import collectionModel from "../Models/collectionModel.js";
 import { createCollectionService, findCollectionByName } from "../services/collectionService.js";
 

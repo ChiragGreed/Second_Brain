@@ -1,5 +1,5 @@
 import express from 'express';
-import { getKnowledgeGraph } from '../controllers/GraphController.js';
+import { getKnowledgeGraph } from '../controllers/graphController.js';
 import validateUser from '../Middlewares/authMiddlewares/validateUser.js';
 
 

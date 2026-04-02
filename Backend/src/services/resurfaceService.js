@@ -1,5 +1,5 @@
 
-import Item from "../models/itemModel.js"
+import Item from "../Models/itemModel.js"
 
 export const getResurfacedItems = async (userid) => {
 

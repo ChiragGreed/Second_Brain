@@ -1,4 +1,4 @@
-import itemModel from "../models/itemModel.js"
+import itemModel from "../Models/itemModel.js"
 import { cosineSimilarity } from "../services/similarityService.js"
 
 export const vectorSearch = async ({

@@ -1,4 +1,3 @@
-import userModel from "../../Models/UserModel.js";
 import JWT from 'jsonwebtoken'
 
 const validateUser = async (req, res, next) => {

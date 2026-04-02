@@ -32,5 +32,9 @@
     "metascraper-url": "^5.50.0",
     "mongoose": "^9.3.1",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.4",
+    "eslint-plugin-import": "^2.32.0"
   }
 }

@@ -1,14 +1,15 @@
 import express from 'express';
-import ItemRouter from './routes/ItemRoutes.js';
-import CollectionRouter from './routes/CollectionRoutes.js';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import GraphRouter from './routes/GraphRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-import IntegrationRouter from './routes/IntegrationRoute.js';
+import CollectionRouter from './routes/collectionRoutes.js';
 import path from 'path'
-
+import cors from 'cors';
 import { fileURLToPath } from "url";
+
+import ItemRouter from './routes/itemRoutes.js';
+import GraphRouter from './routes/graphRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import IntegrationRouter from './routes/integrationRoute.js';
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
