@@ -45,9 +45,9 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { username, password } = req.body;
 
-        const user = await userModel.findOne({ email }).select("+password");
+        const user = await userModel.findOne({ username }).select("+password");
 
         if (!user) return res.status(404).json({
             message: "Invalid credintials, wrong password or email",
@@ -82,4 +82,16 @@ export const login = async (req, res) => {
             err: "Failed to login user"
         });
     }
+}
+
+export const Protected = async (req, res) => {
+    const { token } = req.cookies;
+
+    if (!token) return res.status(401).json({
+        message: "Token not found"
+    })
+
+    res.status(200).json({
+        message: "Access granted"
+    })
 }

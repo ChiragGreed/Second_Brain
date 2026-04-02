@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import useItems from "../../Hooks/useItems"
+import useItems from '../../Features/Items/Hook/useItems.js'
 import "./SearchBar.scss"
 import { useNavigate } from "react-router-dom";
 

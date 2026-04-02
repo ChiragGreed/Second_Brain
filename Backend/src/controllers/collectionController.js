@@ -1,6 +1,30 @@
 import collectionModel from "../Models/collectionModel.js";
 import itemModel from "../models/itemModel.js";
+import { createCollectionService } from "../services/collectionService.js";
 
+
+export const createCollection = async (req, res) => {
+
+    const { userid } = req.user;
+    const { name } = req.body;
+
+    if (!name) return res.status(400).json({
+        message: "Collection name is required",
+        success: false,
+        err: "No Collection name provided"
+    })
+
+    const collection = await createCollectionService({ name, userid })
+
+    res.status(201).json({
+        message: "Collection created",
+        success: true,
+        collection
+    })
+
+
+
+}
 
 export const getCollections = async (req, res) => {
 
@@ -12,6 +36,7 @@ export const getCollections = async (req, res) => {
         success: true,
     })
 
+    console.log(collections);
     res.status(200).json({
         message: "Fetched Item Collections",
         success: true,

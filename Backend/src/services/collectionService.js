@@ -1,36 +1,28 @@
-import Collection from "../Models/collectionModel.js";
+import collectionModel from "../Models/collectionModel.js";
 
 export const findCollectionByName = async (name) => {
 
     if (!name) return null;
 
-    return await Collection.findOne({
+    return await collectionModel.findOne({
         name: name.trim()
     });
 
 };
 
 
-export const createCollectionIfNotExists = async (name) => {
+export const createCollectionService = async (name, userid) => {
 
     if (!name) return null;
 
-    const normalized =
-        name.trim();
+    const normalized = name.trim();
 
-    let collection =
-        await Collection.findOne({
-            name: normalized
-        });
+    let collection = await collectionModel.findOne({ userId: userid, name: normalized });
 
-    if (!collection) {
+    if (collection) return "Collection already exist";
 
-        collection =
-            await Collection.create({
-                name: normalized
-            });
+    collection = await collectionModel.create({ name: normalized, userId: userid });
 
-    }
 
     return collection;
 

@@ -2,15 +2,15 @@ document.getElementById("saveBtn").onclick = async () => {
 
     const existingCollection =
         document
-        .getElementById("existingCollection")
-        .value
-        .trim()
+            .getElementById("existingCollection")
+            .value
+            .trim()
 
     const newCollection =
         document
-        .getElementById("newCollection")
-        .value
-        .trim()
+            .getElementById("newCollection")
+            .value
+            .trim()
 
     const message =
         document.getElementById("message")
@@ -28,52 +28,43 @@ document.getElementById("saveBtn").onclick = async () => {
     }
 
 
-    const [tab] =
-        await chrome.tabs.query({
+    const [tab] = await chrome.tabs.query({
 
-            active: true,
-            currentWindow: true
+        active: true,
+        currentWindow: true
 
-        })
+    })
 
 
-    const result =
-        await chrome.scripting.executeScript({
+    const result = await chrome.scripting.executeScript({
 
-            target: { tabId: tab.id },
+        target: { tabId: tab.id },
 
-            func: () => {
+        func: () => {
 
-                const selectedText =
-                    window.getSelection().toString()
+            const selectedText = window.getSelection().toString()
 
-                return {
+            return {
 
-                    title: document.title,
+                title: document.title.slice(0,60),
 
-                    content:
-                        selectedText ||
-                        document.body.innerText.slice(0,2000),
+                content: selectedText || document.body.innerText.slice(0, 2000),
 
-                    url: window.location.href
-
-                }
+                url: window.location.href
 
             }
 
-        })
+        }
+
+    })
 
 
-    const data =
-        result[0].result
+    const data = result[0].result
 
 
 
     const res =
-        await fetch(
-
-            "http://localhost:9000/api/items/save",
-
+        await fetch("http://localhost:9000/api/items/save",
             {
 
                 method: "POST",
@@ -100,8 +91,7 @@ document.getElementById("saveBtn").onclick = async () => {
         )
 
 
-    const resultMsg =
-        await res.json()
+    const resultMsg = await res.json()
 
 
     message.innerText =

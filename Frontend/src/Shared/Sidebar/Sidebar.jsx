@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Sidebar.scss';
 
 // ── SVG icons ──────────────────────────────────────────────────────────────
@@ -41,7 +41,7 @@ const FOOTER_NAV = [
 const Sidebar = ({ activeScreen, onNavigate }) => {
 
     const navigate = useNavigate();
-    
+
 
     return (
         <aside className="sidebar">

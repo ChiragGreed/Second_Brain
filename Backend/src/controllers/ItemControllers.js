@@ -1,21 +1,25 @@
-import itemModel from "../models/itemModel.js";
-import { createEmbedding } from "../services/embeddingService.js"
+import { createEmbedding } from "../services/embeddingService.js";
 import { generateTags } from "../services/tagsService.js";
-import { RelatedItemService } from "../services/relatedItemsService.js"
-import { semanticSearch } from "../services/semanticSearchService.js"
-import { createCollectionIfNotExists, findCollectionByName } from "../services/collectionService.js";
-import collectionModel from "../Models/collectionModel.js";
-import { getResurfacedItems } from "../services/resurfaceService.js"
+import { RelatedItemService } from "../services/relatedItemsService.js";
+import { semanticSearch } from "../services/semanticSearchService.js";
+import { getResurfacedItems } from "../services/resurfaceService.js";
 import { getLinkPreview } from "../utils/preview.util.js";
+
+
+// Models import
+import itemModel from "../models/itemModel.js";
 import userModel from "../Models/UserModel.js";
+import collectionModel from "../Models/collectionModel.js";
+import { createCollectionService, findCollectionByName } from "../services/collectionService.js";
 
 
 
 export const saveItem = async (req, res) => {
     try {
-        const { content, url, title, existingCollection, newCollection } = req.body;
+        const { content, url, title, summary, existingCollection, newCollection } = req.body;
 
         const { userid } = req.user;
+
 
         const user = await userModel.findById(userid);
 
@@ -35,7 +39,7 @@ export const saveItem = async (req, res) => {
         let collectionId = null;
 
         if (newCollection) {
-            const col = await createCollectionIfNotExists(newCollection.trim());
+            const col = await createCollectionService(newCollection, userid);
 
             collectionId = col._id;
         }
@@ -48,14 +52,16 @@ export const saveItem = async (req, res) => {
             collectionId = col._id;
         }
 
+
         const tags = await generateTags(content);
         const embedding = await createEmbedding(content);
         const preview = await getLinkPreview(url);
 
 
+
         const item = await itemModel.create({
-            title: title || preview.previewTitle,
-            summary: preview.previewDescription,
+            title: preview.previewTitle || title,
+            summary: summary,
             previewImage: preview.previewImage,
             url,
             content,
@@ -84,7 +90,7 @@ export const getItems = async (req, res) => {
     const items = await itemModel.find({ userId: userid }).sort({ createdAt: -1 });
 
 
-    if (items.length === 0) return res.status(404).json({
+    if (items.length === 0) return res.status(200).json({
         message: "No items found",
         success: false,
         error: `No items found in database of user with userid: ${userid}`
@@ -110,7 +116,7 @@ export const getSingleItem = async (req, res) => {
         err: "Missing itemId"
     })
 
-    const item = await itemModel.find({ userId: userid, _id: itemId });
+    const item = await itemModel.findOne({ userId: userid, _id: itemId });
 
     if (!item || item.length === 0) return res.status(404).json({
         message: "No item found",
