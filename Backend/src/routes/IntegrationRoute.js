@@ -1,5 +1,5 @@
 import express from 'express';
-import { setWildCard } from '../controllers/wildCardController';
+import { setWildCard } from '../controllers/wildCardController.js';
 
 const IntegrationRouter = express.Router();
 

@@ -30,6 +30,7 @@
     "metascraper-logo": "^5.50.0",
     "metascraper-title": "^5.50.0",
     "metascraper-url": "^5.50.0",
-    "mongoose": "^9.3.1"
+    "mongoose": "^9.3.1",
+    "path": "^0.12.7"
   }
 }
