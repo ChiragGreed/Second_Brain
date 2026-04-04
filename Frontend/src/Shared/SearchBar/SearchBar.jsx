@@ -1,53 +1,35 @@
-import { useEffect, useState } from "react"
-import useItems from '../../Features/Items/Hook/useItems.js'
-import "./SearchBar.scss"
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './SearchBar.scss';
+
+const SearchIcon = () => (
+  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+);
 
 const SearchBar = () => {
+  const [query, setQuery] = useState('');
+  const navigate = useNavigate();
 
-    const { context_items, searchItemsHandler } = useItems();
-    const { Items } = context_items;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim()) navigate(`/searchResult?query=${query}`);
+  };
 
-    const navigate = useNavigate();
+  return (
+    <header className="search-bar">
+      <div className="search-bar__icon"><SearchIcon /></div>
+      <form className="search-bar__form" onSubmit={handleSubmit}>
+        <input
+          className="search-bar__input"
+          type="text"
+          placeholder="Search your second brain..."
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+        />
+      </form>
+      <span className="search-bar__kbd">⌘K</span>
+    </header>
+  );
+};
 
-    const [Query, setQuery] = useState("");
-
-
-    const submitHandler = async (e) => {
-        e.preventDefault();
-        navigate(`/searchResult?query=${Query}`)
-    }
-
-    const handleSearch = (e) => {
-        const value = e.target.value
-        setQuery(value)
-    }
-
-    return (
-
-        <header className="search_bar">
-
-            <label className="search_bar_icon" htmlFor="itemSearch">
-
-                <i className="ri-search-line"></i>
-
-            </label>
-
-            <form onSubmit={submitHandler}>
-
-                <input
-                    type="text"
-                    id="itemSearch"
-                    placeholder="Search anything..."
-                    value={Query}
-                    onChange={handleSearch}
-                />
-            </form>
-
-        </header>
-
-    )
-
-}
-
-export default SearchBar
+export default SearchBar;

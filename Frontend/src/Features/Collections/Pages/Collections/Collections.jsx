@@ -16,7 +16,7 @@ const Collections = () => {
 
     const navigate = useNavigate();
 
-    const { context_collections, getCollectionsHandler, getCollectionItemsHandler } = useCollections();
+    const { context_collections, getCollectionsHandler } = useCollections();
     const { context_items, getItemsHandler } = useItems();
 
     const { Collections = [] } = context_collections;

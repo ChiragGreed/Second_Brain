@@ -1,18 +1,45 @@
-@import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
-
-*{
-    margin: 0;
-    padding:0;
-    box-sizing: border-box;
+// ── Design tokens ─────────────────────────────────────────────────────────
+:root {
+  --bg:        #0c0c0f;
+  --bg2:       #111116;
+  --bg3:       #18181f;
+  --bg4:       #1e1e27;
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.12);
+  --ink:       #f0eee8;
+  --ink2:      #9b99a3;
+  --ink3:      #5a5864;
+  --amber:     #e8a930;
+  --amber-dim: rgba(232,169,48,0.12);
+  --amber-glow:rgba(232,169,48,0.06);
+  --green:     #4caf7d;
+  --red:       #e05c5c;
+  --radius:    12px;
+  --radius-sm: 8px;
 }
 
-html,body,#root{
-    height: 100%;
-    width: 100%;
-    background-color: rgb(21, 21, 21);
-    // color:white;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Syne', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
 
+::selection {
+  background: var(--amber-dim);
+  color: var(--amber);
+}
 
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
