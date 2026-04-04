@@ -3,37 +3,44 @@
 
 <body>
 
-    <h3>Save</h3>
+    <div id="authView" class="auth-card">
 
-    <label>
-        Add to existing collection
-    </label>
+        <h2>Second Brain</h2>
 
-    <input
-        id="existingCollection"
-        placeholder="existing collection name"
-    />
+        <input id="username" placeholder="username" />
 
-    <br><br>
+        <input id="password" type="password" placeholder="password" />
 
-    <label>
-        Create new collection
-    </label>
+        <button id="loginBtn">
+            Sign in
+        </button>
 
-    <input
-        id="newCollection"
-        placeholder="new collection name"
-    />
+        <p id="message"></p>
 
-    <br><br>
+    </div>
 
-    <button id="saveBtn">
-        Save this page
-    </button>
 
-    <p id="message"></p>
 
-    <script src="popup.js"></script>
+    <div id="saveView" style="display:none" class="save-card">
+
+        <h3>Save knowledge</h3>
+
+        <input id="title" placeholder="Title" />
+
+        <textarea id="content" placeholder="Description / notes"></textarea>
+
+        <input id="url" placeholder="https://..." />
+
+        <button id="saveBtn">
+            Save
+        </button>
+
+        <p id="saveMessage"></p>
+
+    </div>
+
+
+    <script type="module" src="popup.js"></script>
 
 </body>
 

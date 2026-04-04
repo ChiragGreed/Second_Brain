@@ -13,21 +13,7 @@ const itemSchema = new mongoose.Schema({
     },
 
     content: {
-        type: String,
-        required: true,
-    },
-
-    summary: {
-        type: String,
-        default: function () {
-
-            if (!this.content) return "";
-
-            const words = this.content.split(" ");
-
-            return words.slice(0, 30).join(" ") + "...";
-
-        }
+        type: String
     },
 
     previewTitle: {

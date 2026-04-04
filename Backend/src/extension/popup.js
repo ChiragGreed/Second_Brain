@@ -1,101 +1,245 @@
-document.getElementById("saveBtn").onclick = async () => {
+const API = "https://second-brain-td6n.onrender.com/api"
 
-    const existingCollection =
-        document
-            .getElementById("existingCollection")
-            .value
-            .trim()
+document.addEventListener("DOMContentLoaded", () => {
 
-    const newCollection =
-        document
-            .getElementById("newCollection")
-            .value
-            .trim()
-
-    const message =
-        document.getElementById("message")
-
-    message.innerText = ""
+    const token =
+        localStorage.getItem("token")
 
 
-    if (existingCollection && newCollection) {
+    if (token)
+        showSaveView()
 
-        message.innerText =
-            "Use only one field"
+    document
+        .getElementById("loginBtn")
+        .onclick = async () => { loginHandler() }
 
-        return
+    document
+        .getElementById("saveBtn")
+        .onclick = async () => { saveItemHandler() }
+
+})
+
+// LOGIN
+
+async function loginHandler() {
+    const username = document.getElementById("username").value;
+
+    const password = document.getElementById("password").value;
+
+
+    try {
+
+        const res =
+            await fetch(
+
+                `${API}/auth/login`,
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            username,
+                            password
+
+                        })
+
+                }
+
+            )
+
+
+        const data =
+            await res.json()
+
+
+        if (data.token) {
+
+            localStorage.setItem(
+
+                "token",
+                data.token
+
+            )
+
+            showSaveView()
+
+        }
+
+        else {
+
+            document
+                .getElementById("message")
+                .innerText =
+                data.error
+                || "Login failed"
+
+        }
 
     }
 
+    catch (err) {
 
-    const [tab] = await chrome.tabs.query({
+        document
+            .getElementById("message")
+            .innerText =
+            "Server error"
 
-        active: true,
-        currentWindow: true
+    }
 
-    })
+}
 
 
-    const result = await chrome.scripting.executeScript({
+async function saveItemHandler() {
+    const title =
+        document
+            .getElementById("title")
+            .value
 
-        target: { tabId: tab.id },
+    const content =
+        document
+            .getElementById("content")
+            .value
 
-        func: () => {
+    const url =
+        document
+            .getElementById("url")
+            .value
 
-            const selectedText = window.getSelection().toString()
 
-            return {
+    try {
 
-                title: document.title.slice(0,60),
+        const res =
+            await fetch(
 
-                content: selectedText || document.body.innerText.slice(0, 2000),
+                `${API}/items/save`,
 
-                url: window.location.href
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        Authorization:
+
+                            `Bearer ${localStorage
+                                .getItem("token")
+                            }`
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            title,
+                            content,
+                            url
+
+                        })
+
+                }
+
+            )
+
+
+        const data =
+            await res.json()
+
+
+        document
+            .getElementById("saveMessage")
+            .innerText =
+            data.message
+            || data.error
+
+
+        clearForm()
+
+    }
+
+    catch (err) {
+
+        document
+            .getElementById("saveMessage")
+            .innerText =
+            "Error saving item"
+
+    }
+
+}
+
+
+
+function showSaveView() {
+
+    document
+        .getElementById("authView")
+        .style.display =
+        "none"
+
+
+    document
+        .getElementById("saveView")
+        .style.display =
+        "block"
+
+
+    autofillURL()
+
+}
+
+
+
+function autofillURL() {
+
+    chrome.tabs.query(
+
+        {
+
+            active: true,
+            currentWindow: true
+
+        },
+
+        (tabs) => {
+
+            if (tabs[0]) {
+
+                document
+                    .getElementById("url")
+                    .value =
+                    tabs[0].url
 
             }
 
         }
 
-    })
+    )
+
+}
 
 
-    const data = result[0].result
 
+function clearForm() {
 
+    document
+        .getElementById("title")
+        .value = ""
 
-    const res =
-        await fetch("http://localhost:9000/api/items/save",
-            {
-
-                method: "POST",
-
-                headers: {
-
-                    "Content-Type":
-                        "application/json"
-
-                },
-
-                body: JSON.stringify({
-
-                    ...data,
-
-                    existingCollection,
-
-                    newCollection
-
-                })
-
-            }
-
-        )
-
-
-    const resultMsg = await res.json()
-
-
-    message.innerText =
-        resultMsg.message
-        || resultMsg.error
+    document
+        .getElementById("content")
+        .value = ""
 
 }

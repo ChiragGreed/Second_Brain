@@ -60,8 +60,7 @@ export const saveItem = async (req, res) => {
 
 
         const item = await itemModel.create({
-            title: preview.previewTitle || title,
-            summary: summary,
+            title: title || preview.previewTitle,
             previewImage: preview.previewImage,
             url,
             content,
